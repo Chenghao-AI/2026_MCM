@@ -83,11 +83,11 @@
 **（1）SOC 时间演化方程（能量守恒）**
 
 $$
-E_{eff}\frac{dSOC}{dt}=-P_{tot} \tag{1}
+E_{eff}\frac{dSOC}{dt}=-P_{tot}\qquad\text{(1)}
 $$
 
 $$
-P_{tot}=P_{CPU}+P_{net}+P_{dis} \tag{2}
+P_{tot}=P_{CPU}+P_{net}+P_{dis}\qquad\text{(2)}
 $$
 
 其中 $E_{eff}$ 为锂电池有效总能量（J），$P_{tot}$ 为整机总功率（W），按功耗来源分解为 CPU、网络、显示三部分。
@@ -95,23 +95,23 @@ $$
 **（2）温度演化方程（Newton 冷却定律 + 热节流）**
 
 $$
-C\frac{dT}{dt}=(1-\eta_0)P_{CPU}+(1-\eta_n)P_{net}+(1-\eta_d)P_{dis}-\lambda S(T-T_0) \tag{3}
+C\frac{dT}{dt}=(1-\eta_0)P_{CPU}+(1-\eta_n)P_{net}+(1-\eta_d)P_{dis}-\lambda S(T-T_0)\qquad\text{(3)}
 $$
 
 各 $\eta$ 为对应元件的能量利用效率（有效功率占比），其余为废热；最后一项为向环境的散热。高温触发降频：
 
 $$
-f=f_0\,u(T),\qquad f_{dis}=60\,u(T) \tag{4-5}
+f=f_0\,u(T),\qquad f_{dis}=60\,u(T)\qquad\text{(4-5)}
 $$
 
 $$
-u(T)=\begin{cases}1, & T\le T_0\\ u_{min}+(1-u_{min})e^{-\frac{T-T_0}{\tau}}, & T>T_0\end{cases} \tag{6}
+u(T)=\begin{cases}1, & T\le T_0\\ u_{min}+(1-u_{min})e^{-\frac{T-T_0}{\tau}}, & T>T_0\end{cases}\qquad\text{(6)}
 $$
 
 **（3）温度对电池有效容量的影响**
 
 $$
-E_{eff}=\frac{E_{eff}(25)}{F(25)}F(T),\qquad F(T)=0.0026T^3-1.2176T^2+73.8623T+9933.3511 \tag{7-8}
+E_{eff}=\frac{E_{eff}(25)}{F(25)}F(T),\qquad F(T)=0.0026T^3-1.2176T^2+73.8623T+9933.3511\qquad\text{(7-8)}
 $$
 
 ### 三大子模型
@@ -119,7 +119,7 @@ $$
 **CPU 模型**（式 9）：由后台静态功耗 + 当前任务动态功耗 + 下载数据处理功耗三部分组成。
 
 $$
-P_{CPU}=\frac{1}{\eta_0}\big(P_0+k_0 f+\alpha f I_{down}\big) \tag{9}
+P_{CPU}=\frac{1}{\eta_0}\big(P_0+k_0 f+\alpha f I_{down}\big)\qquad\text{(9)}
 $$
 
 - $P_0$：后台活动维持的恒定功耗；$k_0$：任务相关的频率-功耗系数（游戏最大）；$f$：CPU 主频；$\alpha$：处理单位下载数据的能耗系数；$I_{down}$：平均下载速率。
@@ -129,27 +129,27 @@ $$
 - 工作模式（式 10-12）：射频前端（RF Front-End）维持连接的功耗 + 下载数据处理功耗。
 
 $$
-P_{net}=\frac{1}{\eta_n}\big(P_{RF}\tfrac{I_{down}}{v_{down}}+\beta I_{down}\big) \tag{10}
+P_{net}=\frac{1}{\eta_n}\big(P_{RF}\tfrac{I_{down}}{v_{down}}+\beta I_{down}\big)\qquad\text{(10)}
 $$
 
 $$
-P_{RF}=\min\big(P_{max},\,P_0\cdot 10^{-(RSRP-30)/10}\big) \tag{11}
+P_{RF}=\min\big(P_{max},\,P_0\cdot 10^{-(RSRP-30)/10}\big)\qquad\text{(11)}
 $$
 
 $$
-v_{down}=B\log_2\big(1+10^{(SNR-30)/10}\big) \tag{12}
+v_{down}=B\log_2\big(1+10^{(SNR-30)/10}\big)\qquad\text{(12)}
 $$
 
 - 待机模式（式 13）：后台仅少量下载，考虑信令爬坡能量（ramping energy）与尾能量（tail energy）。
 
 $$
-P_{net}=\frac{1}{\eta_n}(f_n E_0+\beta I_{down}) \tag{13}
+P_{net}=\frac{1}{\eta_n}(f_n E_0+\beta I_{down})\qquad\text{(13)}
 $$
 
 **显示模型**（式 14）：OLED 自发光像素功耗 + 显示驱动电路（DDIC）动态刷新功耗。
 
 $$
-P_{dis}=\frac{(k_1 L+k_2 f_{dis})S\rho}{\eta_{dis}} \tag{14}
+P_{dis}=\frac{(k_1 L+k_2 f_{dis})S\rho}{\eta_{dis}}\qquad\text{(14)}
 $$
 
 - $L$：归一化亮度；$S$：屏幕面积；$\rho$：像素密度；$f_{dis}$：屏幕刷新率。
@@ -159,11 +159,11 @@ $$
 基于 Arrhenius 定律描述有效容量随时间的缓慢衰减：
 
 $$
-\frac{dE_{eff}}{dt}=-kE_{eff}, \qquad k=A\exp\!\Big(\frac{E_a}{RT}\Big) \tag{15-16}
+\frac{dE_{eff}}{dt}=-kE_{eff}, \qquad k=A\exp\!\Big(\frac{E_a}{RT}\Big)\qquad\text{(15-16)}
 $$
 
 $$
-\frac{\Delta E_{eff}}{E_{eff}}=1-e^{-\int_0^T k\,dt} \tag{17}
+\frac{\Delta E_{eff}}{E_{eff}}=1-e^{-\int_0^T k\,dt}\qquad\text{(17)}
 $$
 
 单次放电循环内 $E_{eff}$ 变化很小，可视为常数，经验参数取 $A=10^6\,\text{year}^{-1}$，$E_a=50\,\text{kJ·mol}^{-1}$。
@@ -448,6 +448,7 @@ USB 连接电脑会同时给手机充电，污染放电数据。采集系统采�
 5. Schmalstieg, J., Käbitz, S., Ecker, M., Sauer, D. U. *A holistic aging model for Li(NiMnCo)O2 based 18650 lithium-ion batteries.* J. Power Sources, 257:325–334, 2014.
 
 `文献/` 目录另收录了功率放大器、显示功耗、移动 GPU、网络功耗、手机功耗综述等 14 篇支撑文献及一份 NASA 锂电池多组实验差异分析。
+
 
 ### AI 使用声明
 
